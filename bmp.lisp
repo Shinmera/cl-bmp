@@ -163,8 +163,8 @@
   (bit-masks (typecase (bs:slot header)
                (bitmapinfoheader
                 (typecase (bs:slot header compression)
-                  ((eql :bitfields) rgb)
-                  ((eql :alpha-bitfields) rgba)))))
+                  ((eql :bitfields) rgb-mask)
+                  ((eql :alpha-bitfields) rgba-mask)))))
   (colors (typecase (bs:slot header)
             (bitmapinfoheader
              (vector uint8 (* 4 (bs:slot header palette-size))))

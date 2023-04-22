@@ -7,6 +7,7 @@
 (defpackage #:org.shirakumo.bmp
   (:local-nicknames
    (#:bs #:org.shirakumo.binary-structures))
+  (:shadow #:type)
   (:use #:cl #:org.shirakumo.binary-structures.types)
   (:export
    #:bmp
