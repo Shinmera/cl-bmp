@@ -26,6 +26,13 @@
   (planes uint16)
   (bits/pixel uint16))
 
+(defmethod print-object ((header bitmapcoreheader) stream)
+  (print-unreadable-object (header stream :type T)
+    (format stream "~ax~a ~db/p"
+            (bitmapcoreheader-width header)
+            (bitmapcoreheader-height header)
+            (bitmapcoreheader-bits/pixel header))))
+
 (bs:define-io-alias bitmapcompression
     (case uint32
       (0 :rgb)
@@ -125,6 +132,14 @@
                     (vector uint8 (bs:slot header profile-size))))
                  :offset (bs:slot header profile-offset)))
 
+(defmethod print-object ((bmp bmp) stream)
+  (print-unreadable-object (bmp stream :type T)
+    (let ((header (slot-value bmp 'header)))
+      (format stream "~ax~a ~db/p"
+              (bitmapcoreheader-width header)
+              (bitmapcoreheader-height header)
+              (bitmapcoreheader-bits/pixel header)))))
+
 (bs:define-io-structure ico-entry
   (width uint8)
   (height uint8)
@@ -158,6 +173,14 @@
             (T NIL)))
   (pixels (vector uint8 (bs:slot header image-size))))
 
+(defmethod print-object ((bmp bmpcontent) stream)
+  (print-unreadable-object (bmp stream :type T)
+    (let ((header (slot-value bmp 'header)))
+      (format stream "~ax~a ~db/p"
+              (bitmapcoreheader-width header)
+              (bitmapcoreheader-height header)
+              (bitmapcoreheader-bits/pixel header)))))
+
 (bs:define-io-structure ico
   #(0 0)
   (type (case uint16
@@ -166,3 +189,9 @@
   (count uint16)
   (entries (vector ico-entry (bs:slot count)))
   (images (vector bmpcontent (bs:slot count) (bs:slot (aref (bs:slot entries) bs:i) offset))))
+
+(defmethod print-object ((ico ico) stream)
+  (print-unreadable-object (ico stream :type T)
+    (format stream "~a (~{~{~ax~a~}~^, ~})" (ico-type ico)
+            (loop for entry across (ico-entries ico)
+                  collect (list (ico-entry-width entry) (ico-entry-height entry))))))
