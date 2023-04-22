@@ -7,7 +7,7 @@
 (in-package #:org.shirakumo.bmp)
 
 (docs:define-docs
-  (type bmp
+  (cl:type bmp
     "Representation of a bitmap file.
 
 See DECODE-PIXELS
@@ -54,7 +54,7 @@ ENCODE-PIXELS.
 See BMP (type)
 See ENCODE-PIXELS")
   
-  (type ico-entry
+  (cl:type ico-entry
     "Representation of the metadata about an ICO image.
 
 See ICO (type)
@@ -63,7 +63,7 @@ See HEIGHT
 See PROPERTY-1
 See PROPERTY-2")
   
-  (type ico
+  (cl:type ico
     "Representation of an ICO or CUR file.
 
 See READ-ICO
