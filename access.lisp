@@ -6,6 +6,73 @@
 
 (in-package #:org.shirakumo.bmp)
 
+(defmacro define-accessor (name type &optional (slot name))
+  `(progn (defmethod ,name ((entry ,type))
+            (,(intern (format NIL "~a-~a" type slot)) entry))
+          (defmethod (setf ,name) (value (entry ,type))
+            (setf (,(intern (format NIL "~a-~a" type slot)) entry) value))))
+
+(defmacro define-delegates (type slot &rest delegates)
+  `(progn ,@(loop for delegate in delegates
+                  collect `(defmethod ,delegate ((entry ,type))
+                             (,delegate (,(intern (format NIL "~a-~a" type slot)) entry)))
+                  collect `(defmethod (setf ,delegate) (value (entry ,type))
+                             (setf (,delegate (,(intern (format NIL "~a-~a" type slot)) entry)) value)))))
+
+(define-accessor r rgb-mask)
+(define-accessor g rgb-mask)
+(define-accessor b rgb-mask)
+(define-accessor a rgba-mask)
+(define-accessor x xyz)
+(define-accessor y xyz)
+(define-accessor z xyz)
+(define-accessor width bitmapcoreheader)
+(define-accessor height bitmapcoreheader)
+(define-accessor planes bitmapcoreheader)
+(define-accessor bits/pixel bitmapcoreheader)
+(define-accessor compression os22xbitmapheader/short)
+(define-accessor horizontal-resolution bitmapinfoheader)
+(define-accessor vertical-resolution bitmapinfoheader)
+(define-accessor mask bitmapv2infoheader)
+(define-accessor mask bitmapv3infoheader)
+(define-accessor red-endpoint bitmapv4infoheader)
+(define-accessor green-endpoint bitmapv4infoheader)
+(define-accessor blue-endpoint bitmapv4infoheader)
+(define-accessor gamma bitmapv4infoheader)
+(define-accessor intent bitmapv5infoheader)
+(define-accessor resolution-unit os22xbitmapheader)
+(define-accessor origin os22xbitmapheader)
+(define-accessor color-encoding os22xbitmapheader)
+(define-accessor identifier os22xbitmapheader)
+(define-accessor header bmp)
+(define-accessor bit-masks bmp)
+(define-accessor colors bmp)
+(define-accessor pixels bmp)
+(define-accessor width ico-entry)
+(define-accessor height ico-entry)
+(define-accessor header bmpcontent)
+(define-accessor bit-masks bmpcontent)
+(define-accessor colors bmpcontent)
+(define-accessor pixels bmpcontent)
+(define-accessor type ico)
+(define-accessor entries ico)
+(define-accessor images ico)
+
+(define-delegates bmpcontent header 
+  width height planes bits/pixel compression horizontal-resolution
+  vertical-resolution mask red-endpoint green-endpoint blue-endpoint
+  gamma intent resolution-unit origin color-encoding identifier)
+
+(define-delegates bmp header
+  width height planes bits/pixel compression horizontal-resolution
+  vertical-resolution mask red-endpoint green-endpoint blue-endpoint
+  gamma intent resolution-unit origin color-encoding identifier)
+
+(defmethod halftoning ((header os22xbitmapheader))
+  (list (os22xbitmapheader-halftoning header)
+        (os22xbitmapheader-halftoning-parameter-1 header)
+        (os22xbitmapheader-halftoning-parameter-2 header)))
+
 (defun decode-pixels (bmp &optional output)
   (let* ((header (slot-value bmp 'header))
          (pixels (slot-value bmp 'pixels))

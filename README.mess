@@ -1,2 +1,7 @@
 # About cl-bmp
 This library implements encoding and decoding for Windows bitmap formats (BMP, DIB, ICO, CUR).
+
+## How To
+Read a file with ``read-bmp`` or ``read-ico``. From there you can decode the pixel data with ``decode-pixels``. The other way around works with ``encode-pixels`` and ``write-bmp`` / ``write-ico``.
+
+See the ``ico`` and ``bmp`` descriptions for information on additional fields.

@@ -57,7 +57,7 @@
 
 (bs:define-io-structure bitmapv3infoheader
   (:include bitmapinfoheader)
-  (maks rgba-mask))
+  (mask rgba-mask))
 
 (bs:define-io-structure bitmapv4infoheader
   (:include bitmapv3infoheader)
