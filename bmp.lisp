@@ -72,7 +72,7 @@
   (red-endpoint xyz)
   (green-endpoint xyz)
   (blue-endpoint xyz)
-  (gamma rgb))
+  (gamma rgb-mask))
 
 (bs:define-io-structure bitmapv5infoheader
   (:include bitmapv4infoheader)

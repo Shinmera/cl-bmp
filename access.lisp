@@ -50,6 +50,8 @@
 (define-accessor pixels bmp)
 (define-accessor width ico-entry)
 (define-accessor height ico-entry)
+(define-accessor property-1 ico-entry)
+(define-accessor property-2 ico-entry)
 (define-accessor header bmpcontent)
 (define-accessor bit-masks bmpcontent)
 (define-accessor colors bmpcontent)

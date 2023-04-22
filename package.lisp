@@ -27,6 +27,7 @@
    #:width
    #:height
    #:planes
+   #:bits/pixel
    #:compression
    #:horizontal-resolution
    #:vertical-resolution
@@ -45,8 +46,10 @@
    #:colors
    #:pixels
    #:header
+   #:property-1
+   #:property-2
    #:bit-masks
-   #:lors
+   #:colors
    #:pixels
    #:type
    #:entries
