@@ -1,1 +1,2 @@
-# 
+# About cl-bmp
+This library implements encoding and decoding for Windows bitmap formats (BMP, DIB, ICO, CUR).

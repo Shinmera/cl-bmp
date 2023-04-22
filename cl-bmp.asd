@@ -16,6 +16,7 @@
   :serial T
   :components ((:file "package")
                (:file "bmp")
+               (:file "pixels")
                (:file "documentation"))
   :depends-on (:binary-structures
                :documentation-utils))
