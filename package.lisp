@@ -10,10 +10,13 @@
   (:shadow #:type)
   (:use #:cl #:org.shirakumo.binary-structures.types)
   (:export
+   #:make-bmp
    #:bmp
    #:read-bmp
    #:write-bmp
+   #:make-ico-entry
    #:ico-entry
+   #:make-ico
    #:ico
    #:read-ico
    #:write-ico)
