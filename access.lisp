@@ -120,8 +120,8 @@
 
 (defun channel-decode-fun (channels)
   (lambda (pixels i)
-    (declare (type (simple-array (unsigned-byte 8) (*))))
-    (declare (type bs::index i))
+    (declare (cl:type (simple-array (unsigned-byte 8) (*)) pixels))
+    (declare (cl:type bs::index i))
     (ecase channels
       (4 (+ (ash  0 (aref pixels (+ 0 i)))
             (ash  8 (aref pixels (+ 1 i)))
