@@ -1,14 +1,8 @@
-#|
- This file is a part of cl-bmp
- (c) 2023 Shirakumo http://tymoon.eu (shinmera@tymoon.eu)
- Author: Nicolas Hafner <shinmera@tymoon.eu>
-|#
-
 (asdf:defsystem cl-bmp
   :version "1.0.0"
   :license "zlib"
-  :author "Nicolas Hafner <shinmera@tymoon.eu>"
-  :maintainer "Nicolas Hafner <shinmera@tymoon.eu>"
+  :author "Yukari Hafner <shinmera@tymoon.eu>"
+  :maintainer "Yukari Hafner <shinmera@tymoon.eu>"
   :description "A library for dealing with Windows bitmaps (BMP, DIB, ICO, CUR)"
   :homepage "https://shinmera.github.io/cl-bmp/"
   :bug-tracker "https://github.com/shinmera/cl-bmp/issues"
