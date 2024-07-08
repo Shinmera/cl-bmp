@@ -78,6 +78,8 @@
          (height (bitmapcoreheader-height header))
          (bytes/color (cond ((= 32 bits/pixel) 4)
                             ((= 24 bits/pixel) 3)
+                            ((= 16 bits/pixel) 2)
+                            ((=  8 bits/pixel) 1)
                             ((typep header 'bitmapv5infoheader) 4)
                             ((= 0 (length colors)) 1)
                             (T 3)))
