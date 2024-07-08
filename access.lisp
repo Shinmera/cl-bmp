@@ -76,6 +76,8 @@
          (bits/pixel (bitmapcoreheader-bits/pixel header))
          (width (bitmapcoreheader-width header))
          (height (bitmapcoreheader-height header))
+         ;; Rows are padded to 4 byte boundary
+         (bits/row (* 4 8 (ceiling (* width bits/pixel) (* 4 8))))
          (bytes/color (cond ((= 32 bits/pixel) 4)
                             ((= 24 bits/pixel) 3)
                             ((= 16 bits/pixel) 2)
@@ -83,20 +85,24 @@
                             ((typep header 'bitmapv5infoheader) 4)
                             ((= 0 (length colors)) 1)
                             (T 3)))
-         (bits/row (* 4 8 (ceiling (* width bits/pixel) (* 4 8))))
          (size (* width height bytes/color)))
     (cond ((< 0 (length colors))
-           (unless output 
-             (setf output (make-array size :element-type '(unsigned-byte 8))))
-           (loop for y from 0 below height
-                 for bit = (* y bits/row)
-                 do (loop for x from 0 below width
-                          for i = (* bytes/color (+ x (* y width)))
-                          do (multiple-value-bind (byte subbit) (floor bit 8)
-                               (let ((c (ldb (byte bits/pixel subbit) (aref pixels byte))))
-                                 (loop for ci from 0 below bytes/color
-                                       do (setf (aref output (+ ci i)) (aref colors (+ ci c)))))
-                               (incf bit bits/pixel)))))
+           (let* ((color-stride (etypecase header
+                                  (bitmapinfoheader 4)
+                                  (bitmapcoreheader 3)))
+                  (size (* width height bytes/color)))
+             (unless output
+               (setf output (make-array size :element-type '(unsigned-byte 8))))
+             (loop for y from 0 below height
+                   for bit = (* y bits/row)
+                   do (loop for x from 0 below width
+                            for i = (* bytes/color (+ x (* y width)))
+                            do (multiple-value-bind (byte subbit) (floor bit 8)
+                                 (let ((c (* color-stride (ldb (byte bits/pixel subbit) (aref pixels byte)))))
+                                   (loop for ci from 0 below bytes/color
+                                         do (setf (aref output (+ ci i)) (aref colors (+ ci c)))))
+                                 (incf bit bits/pixel))))
+             (values output width height bytes/color)))
           ((/= size (length pixels))
            (unless output 
              (setf output (make-array size :element-type '(unsigned-byte 8))))
