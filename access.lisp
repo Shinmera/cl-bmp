@@ -87,6 +87,7 @@
                             (T 3)))
          (size (* width height bytes/color)))
     (cond ((< 0 (length colors))
+           ;; Indexed colour decompression
            (let* ((color-stride (etypecase header
                                   (bitmapinfoheader 4)
                                   (bitmapcoreheader 3)))
@@ -104,11 +105,13 @@
                                  (incf bit bits/pixel))))
              (values output width height bytes/color)))
           ((/= size (length pixels))
+           ;; ???
            (unless output 
              (setf output (make-array size :element-type '(unsigned-byte 8))))
            (loop for y from 0 below height
                  do (loop for x from 0 below width
                           for i = (* bytes/color (+ x (* y width)))
+                          while (< i (length pixels))
                           do (loop for ci from 0 below bytes/color
                                    do (setf (aref output (+ ci i)) (aref pixels (+ ci i)))))))
           ((null output)
