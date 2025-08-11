@@ -4,9 +4,9 @@
   :author "Yukari Hafner <shinmera@tymoon.eu>"
   :maintainer "Yukari Hafner <shinmera@tymoon.eu>"
   :description "A library for dealing with Windows bitmaps (BMP, DIB, ICO, CUR)"
-  :homepage "https://shinmera.github.io/cl-bmp/"
-  :bug-tracker "https://github.com/shinmera/cl-bmp/issues"
-  :source-control (:git "https://github.com/shinmera/cl-bmp.git")
+  :homepage "https://shinmera.com/docs/cl-bmp/"
+  :bug-tracker "https://shinmera.com/project/cl-bmp/issues"
+  :source-control (:git "https://shinmera.com/project/cl-bmp.git")
   :serial T
   :components ((:file "package")
                (:file "bmp")
@@ -22,9 +22,9 @@
   :author "Yukari Hafner <shinmera@tymoon.eu>"
   :maintainer "Yukari Hafner <shinmera@tymoon.eu>"
   :description "Tests for the cl-bmp system."
-  :homepage "https://shinmera.github.io/cl-bmp/"
-  :bug-tracker "https://github.com/shinmera/cl-bmp/issues"
-  :source-control (:git "https://github.com/shinmera/cl-bmp.git")
+  :homepage "https://shinmera.com/docs/cl-bmp/"
+  :bug-tracker "https://shinmera.com/project/cl-bmp/issues"
+  :source-control (:git "https://shinmera.com/project/cl-bmp.git")
   :serial T
   :components ((:file "test"))
   :depends-on (:cl-bmp :parachute :pngload)
